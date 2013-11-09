@@ -2,7 +2,10 @@ function startRobot(){
   var url = 'http://localhost:8000/create';
   var index = 0;
 
-  setInterval(function(){
+  var interval = setInterval(function(){
+    if (index === coords.length) {
+      return;
+    }
     var data = {};
     data.session_id = 1;
     data.latitude = coords[index].split(',')[0];

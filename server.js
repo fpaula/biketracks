@@ -23,6 +23,13 @@ app.get('/', function(req, res){
   });
 });
 
+app.get('/track', function(req, res){
+  res.render('track', {
+    title: 'Tracking',
+    header: 'Track page'
+  });
+});
+
 app.post('/create', function(req, res){
   res.render('home', {
     title: "WalBril",

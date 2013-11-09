@@ -1,0 +1,41 @@
+<% include header.html %>
+
+<h1>Track</h1>
+
+<button class="tracking">Start tracking</button>
+<script>
+  $(document).ready(function() {
+    $('.tracking').on('click', function() {
+      var element = $(this);
+      if (element.html() === 'Start tracking' ) {
+        element.html("Stop tracking");
+        start();
+      } else {
+        element.html("Start tracking");
+        stop();
+      }
+    });
+  });
+
+  function start() {
+    Geo.watch(function(position){
+      var data = {};
+      //TODO: set a real session id
+      data.session_id = 1;
+      data.latitude = position.coords.latitude;
+      data.longitude = position.coords.longitude;
+      $.ajax({
+        type: 'POST',
+        url: '/create',
+        data: data,
+        contentType: 'application/json'
+      });
+    });
+  }
+
+  function stop() {
+
+  }
+</script>
+<script src="/javascripts/geo.js"></script>
+<% include footer.html %>

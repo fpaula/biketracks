@@ -5,15 +5,25 @@ var isProduction = (process.env.NODE_ENV === 'production');
 var port = (isProduction ? 80 : 8000);
 // var http = require('http');
 
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+
+app.use(express.static('public'));
 
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
+  res.render('home', {
+    title: "WalBril",
+    header: "Test page"
+  });
+});
+
+app.post('/create', function(req, res){
   res.render('home', {
     title: "WalBril",
     header: "Test page"

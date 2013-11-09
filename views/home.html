@@ -1,5 +1,61 @@
 <% include header.html %>
 
-<h1>Home</h1>
+<iframe src="http://nodeknockout.com/iframe/walbril" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+
+<div id="map"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:8000');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script>
+  function error(msg) {
+    console.log(arguments);
+  }
+
+  function success(position) {
+    var Center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var map;
+
+    (function initialize() {
+      
+      var mapProp = {
+        center:    Center,
+        zoom:      17,
+        mapTypeId: google.maps.MapTypeId.SATELLITE
+      };
+
+      map = new google.maps.Map(document.getElementById("map"), mapProp);
+    }());
+
+    function createPolyline() {
+      var polyOptions = {
+        strokeColor: '#000000',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+      };
+      poly = new google.maps.Polyline(polyOptions);
+      poly.setMap(map);
+    }
+
+
+  }
+  navigator.geolocation.getCurrentPosition(success, error);
+  
+
+
+
+
+polylines = {
+  {id:"", poly: []}
+}
+
+</script>
 
 <% include footer.html %>

@@ -1,4 +1,4 @@
-function startRobot(){
+function startRobot(id){
   var url = 'http://localhost:8000/create';
   var index = 0;
 
@@ -7,7 +7,7 @@ function startRobot(){
       return;
     }
     var data = {};
-    data.session_id = 1;
+    data.session_id = id;
     data.latitude = coords[index].split(',')[0];
     data.longitude = coords[index].split(',')[1];
     $.ajax({

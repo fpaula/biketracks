@@ -2,7 +2,7 @@
 
 <h1>Track</h1>
 
-<button class="tracking">Start tracking</button>
+<button data-session-id="<%= session_id %>" class="tracking">Start tracking</button>
 <script>
   $(document).ready(function() {
     $('.tracking').on('click', function() {
@@ -20,8 +20,7 @@
   function start() {
     Geo.watch(function(position){
       var data = {};
-      //TODO: set a real session id
-      data.session_id = 10;
+      data.session_id = $('button').data('session-id');
       data.latitude = position.coords.latitude;
       data.longitude = position.coords.longitude;
       $.ajax({
@@ -34,7 +33,7 @@
   }
 
   function stop() {
-
+    Geo.clearWatch();
   }
 </script>
 <script src="/javascripts/geo.js"></script>

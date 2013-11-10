@@ -25,10 +25,9 @@
 
   function success(position) {
     var Center  = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var path    = new google.maps.MVCArray();
     var service = new google.maps.DirectionsService();
+    // var path = new google.maps.MVCArray();
     var map;
-
 
     (function initialize() {
       var mapProp = {
@@ -58,15 +57,37 @@
     function addLatLng(event) {
       var path = poly.getPath();
 
-      path.push(event.latLng);
-
-      var marker = new google.maps.Marker({
-        position: event.latLng,
-        map: map
-      });
+      if (path.getLength() === 0) {
+        path.push(event.latLng);
+        if(path.getLength() === 1) {
+          poly.setPath(path);
+        }
+        var marker = new google.maps.Marker({
+          position: event.latLng,
+          map: map
+        });
+      } else {
+        service.route({
+            origin: path.getAt(path.getLength() - 1),
+            destination: event.latLng,
+            travelMode: google.maps.DirectionsTravelMode.WALKING 
+          },
+          function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              for(var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                path.push(result.routes[0].overview_path[i]);
+                var marker = new google.maps.Marker({
+                  position: event.latLng,
+                  map: map
+                });
+              }
+            }
+          }
+        );
+      }
     }
-
   }
+
   navigator.geolocation.getCurrentPosition(success, error);
 
 </script>

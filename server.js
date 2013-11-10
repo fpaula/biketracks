@@ -7,8 +7,45 @@ var port = (isProduction ? 80 : 8000);
 
 var express = require('express');
 var app = express();
+app.use(express.bodyParser());
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+
+
+// MONGO //
+var mongo = require('mongodb');
+
+var DBServer = mongo.Server,
+  Db = mongo.Db,
+  BSON = mongo.BSONPure;
+
+var db_server = new DBServer('localhost', 27017, {auto_reconnect: true});
+db = new Db('walbril', db_server);
+
+db.open(function(err, db) {
+  if(!err) {
+    db.collection('tracks', {strict:true}, function(err, collection) {
+      if (err) {
+        console.log("The 'tracks' collection doesn't exist.");
+      }
+    });
+  }
+});
+
+addTrack = function(req, res) {
+  console.log(req.body);
+  var track = req.body;
+  db.collection('tracks', function(err, collection) {
+    collection.insert(track, {safe:true}, function(err, result) {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+      } else {
+        res.send(result[0]);
+      }
+    });
+  });
+}
+// MONGO //
 
 app.use(express.static('public'));
 
@@ -31,6 +68,7 @@ app.get('/track', function(req, res){
 });
 
 app.post('/create', function(req, res){
+  addTrack(req, res);
   res.render('home', {
     title: "WalBril",
     header: "Test page"

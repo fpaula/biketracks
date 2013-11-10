@@ -13,7 +13,7 @@ function startRobot(){
     $.ajax({
       type: 'POST',
       url: url,
-      data: data,
+      data: JSON.stringify(data),
       contentType: 'application/json'
     });
     index += 1;

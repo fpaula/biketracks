@@ -63,7 +63,8 @@ app.get('/', function(req, res){
 app.get('/track', function(req, res){
   res.render('track', {
     title: 'Tracking',
-    header: 'Track page'
+    header: 'Track page',
+    session_id: Math.floor((1 + Math.random()) * 0x10000)
   });
 });
 

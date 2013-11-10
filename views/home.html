@@ -1,9 +1,13 @@
 <% include header.html %>
 
-<iframe src="http://nodeknockout.com/iframe/walbril" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
 
 <div id="map"></div>
-
+<div class="top">
+  <p>tes tes teste </p>
+  <div class="right">
+    <iframe src="http://nodeknockout.com/iframe/walbril" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+  </div>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://localhost:8000');
@@ -20,11 +24,13 @@
   }
 
   function success(position) {
-    var Center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var Center  = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var path    = new google.maps.MVCArray();
+    var service = new google.maps.DirectionsService();
     var map;
 
+
     (function initialize() {
-      
       var mapProp = {
         center:    Center,
         zoom:      17,
@@ -32,30 +38,36 @@
       };
 
       map = new google.maps.Map(document.getElementById("map"), mapProp);
+
+      var polyOptions = {
+        strokeColor: '#cc0000',
+        strokeOpacity: 0.5,
+        strokeWeight: 3
+      };
+
+      poly = new google.maps.Polyline(polyOptions);
+      poly.setMap(map);
+      google.maps.event.addListener(map, 'click', addLatLng);
+
     }());
 
     function createPolyline() {
-      var polyOptions = {
-        strokeColor: '#000000',
-        strokeOpacity: 1.0,
-        strokeWeight: 3
-      };
-      poly = new google.maps.Polyline(polyOptions);
-      poly.setMap(map);
+      
     }
 
+    function addLatLng(event) {
+      var path = poly.getPath();
+
+      path.push(event.latLng);
+
+      var marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+      });
+    }
 
   }
   navigator.geolocation.getCurrentPosition(success, error);
-  
-
-
-
-
-polylines = {
-  {id:"", poly: []}
-}
 
 </script>
-
 <% include footer.html %>

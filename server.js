@@ -35,6 +35,11 @@ db.open(function(err, db) {
 addTrack = function(req, res) {
   console.log(req.body);
   var track = req.body;
+
+  io.sockets.on('connection', function (socket) {
+    socket.broadcast.emit('news', track);
+  });
+
   db.collection('tracks', function(err, collection) {
     collection.insert(track, {safe:true}, function(err, result) {
       if (err) {
@@ -45,7 +50,6 @@ addTrack = function(req, res) {
     });
   });
 }
-// MONGO //
 
 app.use(express.static('public'));
 
@@ -73,13 +77,6 @@ app.post('/create', function(req, res){
   res.render('home', {
     title: "WalBril",
     header: "Test page"
-  });
-});
-
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
   });
 });
 

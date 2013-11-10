@@ -21,13 +21,13 @@
     Geo.watch(function(position){
       var data = {};
       //TODO: set a real session id
-      data.session_id = 1;
+      data.session_id = 10;
       data.latitude = position.coords.latitude;
       data.longitude = position.coords.longitude;
       $.ajax({
         type: 'POST',
         url: '/create',
-        data: data,
+        data: JSON.stringify(data),
         contentType: 'application/json'
       });
     });

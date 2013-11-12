@@ -4,7 +4,7 @@
 
 <button data-session-id="<%= session_id %>" class="tracking">Start tracking</button>
 <script>
-  $(document).ready(function() {
+  Zepto(document).ready(function() {
     $('.tracking').on('click', function() {
       var element = $(this);
       if (element.html() === 'Start tracking' ) {
@@ -36,5 +36,4 @@
     Geo.clearWatch();
   }
 </script>
-<script src="/javascripts/geo.js"></script>
 <% include footer.html %>

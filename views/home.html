@@ -1,94 +1,47 @@
 <% include header.html %>
 
 
-<div id="map"></div>
+<div id="map-canvas"></div>
 <div class="top">
-  <p>tes tes teste </p>
+  <p>Rotas</p>
   <div class="right">
     <iframe src="http://nodeknockout.com/iframe/walbril" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
   </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script>
   var socket = io.connect('http://localhost:8000');
   socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
+    draw(data);
   });
-</script>
 
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script>
-  function error(msg) {
-    console.log(arguments);
+  var paths = new google.maps.MVCArray();
+
+  $(document).ready(function(){
+    Geo.get(showMap);
+  });
+
+  var map;
+  function draw(data) {
+    paths.push(new google.maps.LatLng(data.latitude, data.longitude));
+    var line = new google.maps.Polyline({
+      path: paths,
+      geodesic: true,
+      strokeColor: 'green',
+      strokeOpacity: 1.0,
+      strokeWeight: 5
+    });
+    line.setMap(map);
   }
 
-  function success(position) {
-    var Center  = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var service = new google.maps.DirectionsService();
-    // var path = new google.maps.MVCArray();
-    var map;
-
-    (function initialize() {
-      var mapProp = {
-        center:    Center,
-        zoom:      17,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-      };
-
-      map = new google.maps.Map(document.getElementById("map"), mapProp);
-
-      var polyOptions = {
-        strokeColor: '#cc0000',
-        strokeOpacity: 0.5,
-        strokeWeight: 3
-      };
-
-      poly = new google.maps.Polyline(polyOptions);
-      poly.setMap(map);
-      google.maps.event.addListener(map, 'click', addLatLng);
-
-    }());
-
-    function createPolyline() {
-      
-    }
-
-    function addLatLng(event) {
-      var path = poly.getPath();
-
-      if (path.getLength() === 0) {
-        path.push(event.latLng);
-        if(path.getLength() === 1) {
-          poly.setPath(path);
-        }
-        var marker = new google.maps.Marker({
-          position: event.latLng,
-          map: map
-        });
-      } else {
-        service.route({
-            origin: path.getAt(path.getLength() - 1),
-            destination: event.latLng,
-            travelMode: google.maps.DirectionsTravelMode.WALKING 
-          },
-          function(result, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-              for(var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
-                path.push(result.routes[0].overview_path[i]);
-                var marker = new google.maps.Marker({
-                  position: event.latLng,
-                  map: map
-                });
-              }
-            }
-          }
-        );
-      }
-    }
+  function showMap(geo) {
+    var mapOptions = {
+      center: new google.maps.LatLng(geo.coords.latitude, geo.coords.longitude),
+      zoom: 14,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   }
-
-  navigator.geolocation.getCurrentPosition(success, error);
-
 </script>
 <% include footer.html %>

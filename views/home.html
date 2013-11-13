@@ -16,7 +16,7 @@
     draw(data);
   });
 
-  var paths = new google.maps.MVCArray();
+  var paths = [];
 
   $(document).ready(function(){
     Geo.get(showMap);
@@ -24,15 +24,50 @@
 
   var map;
   function draw(data) {
-    paths.push(new google.maps.LatLng(data.latitude, data.longitude));
+    var path = findPath(data);
+    path.coords.push(new google.maps.LatLng(data.latitude, data.longitude));
+    console.log(path.id);
     var line = new google.maps.Polyline({
-      path: paths,
+      path: path.coords,
       geodesic: true,
-      strokeColor: 'green',
+      strokeColor: setColor(path.id),
       strokeOpacity: 1.0,
       strokeWeight: 5
     });
     line.setMap(map);
+  }
+
+  function setColor(id) {
+    //TODO: replace it to an algorithm that generates a color based on its id
+    var color;
+    switch(id) {
+    case 1:
+      color = 'green'
+      break;
+    case 2:
+      color = 'blue'
+      break;
+    case 3:
+      color = 'red'
+      break;
+    default:
+      color = 'yellow'
+    }
+    return color;
+  }
+
+  function findPath(data) {
+    var path;
+    var filtered = paths.filter(function(item) {
+      return item.id === data.session_id;
+    });
+    if (filtered.length === 0) {
+      path = {id: data.session_id, coords: new google.maps.MVCArray()};
+      paths.push(path);
+    } else {
+      path = filtered[0];
+    }
+    return path;
   }
 
   function showMap(geo) {

@@ -1,8 +1,7 @@
 // https://github.com/nko4/website/blob/master/module/README.md#nodejs-knockout-deploy-check-ins
 require('nko')('zKicXuuke0ftcLo4');
 
-var isProduction = (process.env.NODE_ENV === 'production');
-var port = (isProduction ? 80 : 8000);
+var port = process.env.PORT || 8000;
 // var http = require('http');
 
 var express = require('express');

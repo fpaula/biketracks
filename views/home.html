@@ -30,7 +30,7 @@
     var line = new google.maps.Polyline({
       path: path.coords,
       geodesic: true,
-      strokeColor: setColor(path.id),
+      strokeColor: path.color,
       strokeOpacity: 1.0,
       strokeWeight: 5
     });
@@ -38,21 +38,10 @@
   }
 
   function setColor(id) {
-    //TODO: replace it to an algorithm that generates a color based on its id
-    var color;
-    switch(id) {
-    case 1:
-      color = 'green'
-      break;
-    case 2:
-      color = 'blue'
-      break;
-    case 3:
-      color = 'red'
-      break;
-    default:
-      color = 'yellow'
-    }
+    var r = Math.round(Math.random() * 200);
+    var g = Math.round(Math.random() * 200);
+    var b = Math.round(Math.random() * 200);
+    var color = 'rgb(' + r + ',' + g + ',' + b + ')';
     return color;
   }
 
@@ -62,7 +51,7 @@
       return item.id === data.session_id;
     });
     if (filtered.length === 0) {
-      path = {id: data.session_id, coords: new google.maps.MVCArray()};
+      path = {id: data.session_id, coords: new google.maps.MVCArray(), color: setColor()};
       paths.push(path);
     } else {
       path = filtered[0];

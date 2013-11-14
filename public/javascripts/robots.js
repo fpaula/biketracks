@@ -1,5 +1,5 @@
 function startRobot(id){
-  var url = 'http://localhost:8000/create';
+  var url = '/create';
   var index = 0;
 
   var interval = setInterval(function(){

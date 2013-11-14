@@ -13,24 +13,24 @@ var io = require('socket.io').listen(server);
 
 
 // MONGO //
-var mongo = require('mongodb');
+// var mongo = require('mongodb');
 
-var DBServer = mongo.Server,
-  Db = mongo.Db,
-  BSON = mongo.BSONPure;
+// var DBServer = mongo.Server,
+//   Db = mongo.Db,
+//   BSON = mongo.BSONPure;
 
-var db_server = new DBServer('localhost', 27017, {auto_reconnect: true});
-db = new Db('walbril', db_server);
+// var db_server = new DBServer('localhost', 27017, {auto_reconnect: true});
+// db = new Db('walbril', db_server);
 
-db.open(function(err, db) {
-  if(!err) {
-    db.collection('tracks', {strict:true}, function(err, collection) {
-      if (err) {
-        console.log("The 'tracks' collection doesn't exist.");
-      }
-    });
-  }
-});
+// db.open(function(err, db) {
+//   if(!err) {
+//     db.collection('tracks', {strict:true}, function(err, collection) {
+//       if (err) {
+//         console.log("The 'tracks' collection doesn't exist.");
+//       }
+//     });
+//   }
+// });
 
 addTrack = function(req, res) {
   var track = req.body;
@@ -47,7 +47,7 @@ addTrack = function(req, res) {
   // });
 }
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');

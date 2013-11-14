@@ -35,16 +35,16 @@ db.open(function(err, db) {
 addTrack = function(req, res) {
   var track = req.body;
   io.sockets.emit('news', track);
-
-  db.collection('tracks', function(err, collection) {
-    collection.insert(track, {safe:true}, function(err, result) {
-      if (err) {
-        res.send({'error':'An error has occurred'});
-      } else {
-        res.send(result[0]);
-      }
-    });
-  });
+  // We don't have mongodb yet
+  // db.collection('tracks', function(err, collection) {
+  //   collection.insert(track, {safe:true}, function(err, result) {
+  //     if (err) {
+  //       res.send({'error':'An error has occurred'});
+  //     } else {
+  //       res.send(result[0]);
+  //     }
+  //   });
+  // });
 }
 
 app.use(express.static('public'));

@@ -55,7 +55,7 @@ app.set('view engine', 'html');
 app.get('/', function(req, res){
   res.render('home', {
     title: "Home",
-    header: "Test page"
+    header: "Home page"
   });
 });
 
@@ -64,6 +64,20 @@ app.get('/track', function(req, res){
     title: 'Tracking',
     header: 'Track page',
     session_id: Math.floor((1 + Math.random()) * 0x10000)
+  });
+});
+
+app.get('/about', function(req, res){
+  res.render('about', {
+    title: 'About',
+    header: 'About page'
+  });
+});
+
+app.get('/robots', function(req, res){
+  res.render('robots', {
+    title: 'Robots',
+    header: 'Robots page'
   });
 });
 

@@ -1,17 +1,20 @@
 <% include header.html %>
 
-<h1>Track</h1>
+<div class="jumbotron">
+  <h1>Track me</h1>
+  <p>Have you route in our map!</p>
+  <p><a class="btn btn-primary btn-lg tracking" role="button" data-session-id="<%= session_id %>">Start</a></p>
+</div>
 
-<button data-session-id="<%= session_id %>" class="tracking">Start tracking</button>
 <script>
   Zepto(document).ready(function() {
     $('.tracking').on('click', function() {
       var element = $(this);
-      if (element.html() === 'Start tracking' ) {
-        element.html("Stop tracking");
+      if (element.html() === 'Start' ) {
+        element.html("Stop");
         start();
       } else {
-        element.html("Start tracking");
+        element.html("Start");
         stop();
       }
     });

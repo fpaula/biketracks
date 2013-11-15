@@ -53,8 +53,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
-  res.render('home', {
-    title: "WalBril",
+  res.render('Home', {
+    title: "Home",
     header: "Test page"
   });
 });

@@ -53,7 +53,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
-  res.render('Home', {
+  res.render('home', {
     title: "Home",
     header: "Test page"
   });

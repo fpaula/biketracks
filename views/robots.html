@@ -2,11 +2,60 @@
 
 <div class="jumbotron">
   <h1>Robots</h1>
-  <p>We created some robots to see something on the map. Keep the map in other tab and start the robots.</p>
-  <p>Then watch the map.</p>
-  <iframe src="/robot1.html" frameborder="0"></iframe>
-  <iframe src="/robot2.html" frameborder="0"></iframe>
-  <iframe src="/robot3.html" frameborder="0"></iframe>
-  <iframe src="/robot4.html" frameborder="0"></iframe>
+  <p>We created some robots to see something on the map.</p>
+  <p>Keep the map in other tab and start the robots. Then watch the map.</p>
+
+  <div class="row">
+    <div class="col-sm-2 col-md-2">
+      <div class="thumbnail">
+        <img src="http://maps.googleapis.com/maps/api/staticmap?center=-23.5935211181641016,-46.6930465698241974&size=300x200&sensor=false&zoom=16">
+        <div class="caption">
+          <h3>Robot 1</h3>
+          <p>São Paulo - SP, Brazil</p>
+          <p><a href="#" class="btn btn-primary start" data-robot-id="1" role="button">Start</a>
+            <a href="#" class="btn btn-default stop disabled" role="button">Stop</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <div class="thumbnail">
+        <img src="http://maps.googleapis.com/maps/api/staticmap?center=-23.4919681549072017,-46.8458557128905966&size=300x200&sensor=false&zoom=14">
+        <div class="caption">
+          <h3>Robot 2</h3>
+          <p>Barueri - SP, Brazil</p>
+          <p><a href="#" class="btn btn-primary start" data-robot-id="2" role="button">Start</a>
+            <a href="#" class="btn btn-default stop disabled" role="button">Stop</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <div class="thumbnail">
+        <img src="http://maps.googleapis.com/maps/api/staticmap?center=-23.5941066741943004,-46.6931724548339986&size=300x200&sensor=false&zoom=16">
+        <div class="caption">
+          <h3>Robot 3</h3>
+          <p>São Paulo - SP, Brazil</p>
+          <p><a href="#" class="btn btn-primary start" data-robot-id="3" role="button">Start</a>
+            <a href="#" class="btn btn-default stop disabled" role="button">Stop</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <div class="thumbnail">
+        <img src="http://maps.googleapis.com/maps/api/staticmap?center=-23.4119167327881001,-46.0341606140137003&size=300x200&sensor=false&zoom=12">
+        <div class="caption">
+          <h3>Robot 4</h3>
+          <p>Guararema - SP, Brazil</p>
+          <p><a href="#" class="btn btn-primary start" data-robot-id="4" role="button">Start</a>
+            <a href="#" class="btn btn-default stop disabled" role="button">Stop</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+  <script src="/javascripts/robot1.js"></script>
+  <script src="/javascripts/robot2.js"></script>
+  <script src="/javascripts/robot3.js"></script>
+  <script src="/javascripts/robot4.js"></script>
+  <script src="/javascripts/robots.js"></script>
 <% include footer.html %>

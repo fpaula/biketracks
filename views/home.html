@@ -54,7 +54,7 @@
   function showMap(geo) {
     var mapOptions = {
       center: new google.maps.LatLng(geo.coords.latitude, geo.coords.longitude),
-      zoom: 14,
+      zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
